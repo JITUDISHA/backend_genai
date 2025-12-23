@@ -64,7 +64,7 @@ export default function UserList({ currentUserId }) {
   return (
     <div className="h-full flex flex-col">
       {/* Search Bar */}
-      <div className="p-4 border-b bg-white sticky top-0">
+      <div className="p-4 border-b font-black font-serif text-blue-950 bg-[#bad8a8] sticky top-0">
         <input
           type="text"
           placeholder="Search users..."
