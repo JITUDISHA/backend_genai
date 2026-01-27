@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image'; 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { Spotlight } from "@/components/ui/spotlight";
@@ -18,14 +19,13 @@ export default async function Home() {
     redirect('/chat');
   }
 
+  // Pointing directly to the favicon in your public folder
+  const logoPath = "/favicon.ico";
+
   return (
-    /* MAIN DIV: 'h-screen' locks the height to exactly the window size.
-       'flex-col' stacks the children vertically.
-       'overflow-hidden' prevents the browser's 2nd scrollbar.
-    */
     <div className={`${boko_font.variable} h-screen w-full bg-[#8B2510] relative flex flex-col overflow-hidden text-white selection:bg-[#EBB048] selection:text-[#8B2510]`}>
 
-      {/* --- BACKGROUND LAYERS (Fixed behind content) --- */}
+      {/* --- BACKGROUND LAYERS --- */}
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-[#9e3a22] via-[#8B2510] to-[#5a1608] z-0" />
       <div className="absolute inset-0 z-[1] opacity-20 bg-[radial-gradient(#ffffff_2px,transparent_2px)] [background-size:24px_24px] pointer-events-none" />
       <div className="fixed inset-0 opacity-[0.05] z-[2] pointer-events-none mix-blend-overlay"
@@ -33,14 +33,19 @@ export default async function Home() {
       />
       <Spotlight className="-top-20 left-0 md:left-20 z-[3]" fill="white" />
 
-      {/* --- 1. NAVBAR (Top of Main Div) --- */}
+      {/* --- 1. NAVBAR (With favicon.ico) --- */}
       <header className="relative z-50 w-full px-4 pt-6 pb-2 shrink-0">
-        <div className="max-w-7xl mx-auto bg-[#8B2510]/90 backdrop-blur-sm border-2 border-black rounded-xl px-4 md:px-6 py-3 flex justify-between items-center shadow-[0px_4px_0px_0px_rgba(0,0,0,0.3)]">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-[#EBB048] border-2 border-black rounded-lg flex items-center justify-center shadow-[3px_3px_0_0_#000]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+        <div className="max-w-7xl mx-auto bg-[#f3db9a00] backdrop-blur-sm border-2 border-black rounded-xl px-4 md:px-6 py-3 flex justify-between items-center shadow-[0px_4px_0px_0px_rgba(0,0,0,0.3)]">
+          <div className="flex items-center gap-3">
+            {/* FAVICON LOGO CONTAINER */}
+            <div className=" bg-[#ced5ca] border-2 border-black rounded-lg overflow-hidden flex items-center justify-center shadow-[3px_3px_0_0_#000]">
+               <Image 
+                 src={logoPath} 
+                 alt="PostPilot Favicon" 
+                 width={40} 
+                 height={40} 
+                 className="object-contain"
+               />
             </div>
             <span className="text-xl md:text-2xl pt-1 text-white tracking-tighter" style={{ fontFamily: 'var(--font-bokor)' }}>
               Post<span className="text-[#EBB048]">Pilot</span>
@@ -58,13 +63,10 @@ export default async function Home() {
         </div>
       </header>
 
-      {/* --- SCROLLABLE CONTENT AREA (Hero + Cards) --- */}
-      {/* 'flex-1' makes this fill the space between Nav and Footer. 
-          'overflow-y-auto' creates ONE clean scrollbar here. */}
+      {/* --- SCROLLABLE CONTENT AREA --- */}
       <div className="flex-1 overflow-y-auto custom-scrollbar relative z-10 w-full">
-
         <main className="max-w-[1400px] mx-auto w-full px-4 md:px-8 lg:px-16">
-
+          
           {/* --- 2. HERO SECTION --- */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center py-12 md:py-10">
             <div className="order-2 lg:order-1 relative flex justify-center items-center group">
@@ -109,7 +111,7 @@ export default async function Home() {
               <div className="h-[2px] flex-1 bg-white/20"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10">
               {[
                 { t: "Instant Sync", d: "Messages delivered in under 100ms across global edges.", icon: "⚡" },
                 { t: "Secure Core", d: "Military grade AES-256 bit encryption as standard.", icon: "🔐" },
@@ -126,15 +128,13 @@ export default async function Home() {
         </main>
       </div>
 
-{  /* - py-2: Minimum vertical padding for a "strip" look.
-      - mt-auto: Ensures it stays at the bottom of the content flow.
-      - border-t-2: Maintains the Neo-Brutalism border style.
-      */ }
+      {/* --- 4. FOOTER STRIP (Narrow style with favicon) --- */}
       <footer className="relative z-20 w-full shrink-0 border-t-2 border-black bg-[#5a1608]/95 backdrop-blur-xl mt-auto">
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row justify-between items-center gap-4">
 
           {/* Left Section: Branding */}
           <div className="flex items-center gap-3">
+            <Image src={logoPath} alt="Favicon Logo" width={20} height={20} className="rounded-sm" />
             <span className="text-lg font-black text-white" style={{ fontFamily: 'var(--font-bokor)' }}>
               Post<span className="text-[#EBB048]">Pilot</span>
             </span>
@@ -153,10 +153,11 @@ export default async function Home() {
 
           {/* Right Section: Credit */}
           <div className="flex items-center gap-2">
-            <span className="text-[#EBB048] font-black tracking-[0.1em] uppercase text-[9px] gap-0.5" style={{ fontFamily: 'var(--font-bokor)' }}>
-              Crafted by<div className="h-0.5 w-12 bg-[#EBB048] rounded-full"></div> <h1 className=' font-mono text-[12px]' >DIsha</h1>
+            <span className="text-[#EBB048] font-black tracking-[0.1em] uppercase text-[9px] flex items-center gap-2" style={{ fontFamily: 'var(--font-bokor)' }}>
+              Crafted by 
+              <span className="font-mono text-[11px] text-white">Disha</span>
             </span>
-            
+            <div className="h-0.5 w-8 bg-[#EBB048] rounded-full"></div>
           </div>
 
         </div>
