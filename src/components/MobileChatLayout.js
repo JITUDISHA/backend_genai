@@ -1,9 +1,12 @@
 "use client";
 import { useState } from 'react';
 import { UserButton } from '@clerk/nextjs';
+import Image from 'next/image';
 import ChatSidebar from '@/components/ChatSidebar';
 import UserList from '@/components/UserList';
 import NotificationBell from '@/components/NotificationBell';
+
+
 
 export default function MobileChatLayout({ userId }) {
   const [showUserList, setShowUserList] = useState(false);
