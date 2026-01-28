@@ -79,13 +79,11 @@ export default function ChatRoom() {
           </div>
         </header>
 
-        {/* Message List Area - Transparent to see background dots */}
         <div className="flex-1 overflow-hidden relative">
           <MessageList messages={messages} currentUserId={user?.id} />
         </div>
 
-        {/* Message Input Area */}
-        <div className="bg-[#8B2510]/80 backdrop-blur-md relative z-20">
+        <div className="bg-[#8B2520]/80 backdrop-blur-md relative z-20">
           <MessageInput onSend={sendMessage} />
         </div>
       </div>
